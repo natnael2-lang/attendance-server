@@ -22,20 +22,27 @@ app.post(`/${token}`, (req, res) => {
     if (msg) {
         const chatId = msg.chat.id;
 
-        const options = {
-            reply_markup: {
-                inline_keyboard: [
-                    [
-                        {
-                            text: "Open User Info",
-                            url: "https://telegram-user-info.vercel.app/",
-                        },
+        // Check if the message is a '/start' command
+        if (msg.text === '/start') {
+            const options = {
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            {
+                                text: "Open User Info",
+                                url: "https://telegram-user-info.vercel.app/",
+                            },
+                        ],
                     ],
-                ],
-            },
-        };
+                },
+            };
 
-        bot.sendMessage(chatId, "Welcome! Click the button below to open the user info app.", options);
+            // Send welcome message with the button
+            bot.sendMessage(chatId, "Welcome! Click the button below to open the user info app.", options);
+        } else {
+            // Optionally handle other messages
+            bot.sendMessage(chatId, "You sent: " + msg.text);
+        }
     }
 
     // Respond to Telegram to acknowledge receipt of the update
