@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Set your webhook URL
-const webhookUrl = `https://your-vercel-app-url/${token}`;
+const webhookUrl = `https://https://telegram-bot-server-ptqa-rmz0w061s-natnael-langs-projects.vercel.app/${token}`;
 bot.setWebHook(webhookUrl);
 
 // Handle incoming updates
