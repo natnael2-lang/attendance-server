@@ -7,7 +7,7 @@ const bot = new TelegramBot(token);
 // The handler function
 module.exports.telegramWebhook = async (event) => {
     const update = JSON.parse(event.body);
-    console.log(update);cls
+    console.log(update);
     bot.processUpdate(update);
 
     return {
