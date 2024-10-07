@@ -10,26 +10,13 @@ bot.onText(/\/start/, (msg) => {
 
     const options = {
         reply_markup: {
-            keyboard: [
-                [{ text: 'Open Web App' }]
-            ],
-            resize_keyboard: true,
-            one_time_keyboard: true
+            inline_keyboard: [
+                [{ text: 'Open User Info', url: 'https://telegram-user-info.vercel.app/' }]
+            ]
         }
     };
 
-    bot.sendMessage(chatId, 'Welcome! Click the button below to open the web app.', options);
-});
-
-// Handle button click
-bot.on('message', (msg) => {
-    const chatId = msg.chat.id;
-
-    if (msg.text === 'Open Web App') {
-        bot.sendMessage(chatId, 'Click here to open the web app: [Open Web App](https://your-web-app-url.com)', {
-            parse_mode: 'Markdown'
-        });
-    }
+    bot.sendMessage(chatId, 'Welcome! Click the button below to open the user info app.', options);
 });
 
 console.log('Bot is running...');
