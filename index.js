@@ -1,20 +1,8 @@
 const TelegramBot = require('node-telegram-bot-api');
 
-// Replace with your own Bot Token from BotFather
+// Replace with your own token
 const token = '7865623009:AAHaE6moxB6jQPDzeTpjS-yTqxltWGnov10';
-const bot = new TelegramBot(token);
-
-// The handler function
-module.exports.telegramWebhook = async (event) => {
-    const update = JSON.parse(event.body);
-    console.log(update);
-    bot.processUpdate(update);
-
-    return {
-        statusCode: 200,
-        body: 'Webhook received',
-    };
-};
+const bot = new TelegramBot(token, { polling: true });
 
 // Start command handler
 bot.onText(/\/start/, (msg) => {
@@ -22,11 +10,26 @@ bot.onText(/\/start/, (msg) => {
 
     const options = {
         reply_markup: {
-            inline_keyboard: [
-                [{ text: 'Open User Info', url: '' }]
-            ]
+            keyboard: [
+                [{ text: 'Open Web App' }]
+            ],
+            resize_keyboard: true,
+            one_time_keyboard: true
         }
     };
 
-    bot.sendMessage(chatId, 'Welcome! Click the button below to open the user info app.', options);
+    bot.sendMessage(chatId, 'Welcome! Click the button below to open the web app.', options);
 });
+
+// Handle button click
+bot.on('message', (msg) => {
+    const chatId = msg.chat.id;
+
+    if (msg.text === 'Open Web App') {
+        bot.sendMessage(chatId, 'Click here to open the web app: [Open Web App](https://your-web-app-url.com)', {
+            parse_mode: 'Markdown'
+        });
+    }
+});
+
+console.log('Bot is running...');
