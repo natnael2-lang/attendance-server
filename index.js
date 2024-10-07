@@ -3,34 +3,43 @@ const express = require("express");
 
 // Replace with your own token
 const token = "7865623009:AAHaE6moxB6jQPDzeTpjS-yTqxltWGnov10";
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(token);
 
 // Create an Express app
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Start command handler
-bot.onText(/\/start/, (msg) => {
-    const chatId = msg.chat.id;
+// Middleware to parse incoming requests
+app.use(express.json());
 
-    const options = {
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    {
-                        text: "Open User Info",
-                        url: "https://telegram-user-info.vercel.app/",
-                    },
+// Set your webhook URL
+const webhookUrl = `https://your-vercel-app-url/${token}`;
+bot.setWebHook(webhookUrl);
+
+// Handle incoming updates
+app.post(`/${token}`, (req, res) => {
+    const msg = req.body.message;
+    if (msg) {
+        const chatId = msg.chat.id;
+
+        const options = {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        {
+                            text: "Open User Info",
+                            url: "https://telegram-user-info.vercel.app/",
+                        },
+                    ],
                 ],
-            ],
-        },
-    };
+            },
+        };
 
-    bot.sendMessage(
-        chatId,
-        "Welcome! Click the button below to open the user info app.",
-        options,
-    );
+        bot.sendMessage(chatId, "Welcome! Click the button below to open the user info app.", options);
+    }
+
+    // Respond to Telegram to acknowledge receipt of the update
+    res.sendStatus(200);
 });
 
 // Define a simple route to test the server
@@ -42,6 +51,3 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Express server is running on http://localhost:${PORT}`);
 });
-
-// Keep the bot running
-console.log("Bot is running...");
