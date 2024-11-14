@@ -5,7 +5,16 @@ const {upload} =require("./Multer/multer");
 const {User} =require("./Model/User");
 const mongoose=require("mongoose")
 require('dotenv').config();
-app.use(cors());
+
+
+
+const corsOptions = {
+    origin: "http://localhost:3000", 
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    credentials: true, 
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/images",express.static("./uploads"))
