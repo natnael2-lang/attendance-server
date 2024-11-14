@@ -4,7 +4,7 @@ const cors = require("cors");
 const {upload} =require("./Multer/multer");
 const {User} =require("./Model/User");
 const mongoose=require("mongoose")
-
+require('dotenv').config();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
