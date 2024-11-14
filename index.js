@@ -9,7 +9,7 @@ require('dotenv').config();
 
 
 const corsOptions = {
-    origin: "https://attendance-front-end-nine.vercel.app/", 
+    origin: "https://attendance-front-end-nine.vercel.app", 
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true, 
 };
