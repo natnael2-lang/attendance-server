@@ -9,7 +9,7 @@ require('dotenv').config();
 
 
 const corsOptions = {
-    origin: "http://localhost:3000", 
+    origin: "https://attendance-front-end-nine.vercel.app/", 
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true, 
 };
@@ -44,6 +44,7 @@ app.post("/register", upload.single("image"), async (req, res) => {
    const user= await User.create({
        ...req.body,imagePath:`${req.file.filename}`
     });
+    console.log(user);
     if(!user){console.log("fail to create user");return;}
     res.status(200).json(user)
    
