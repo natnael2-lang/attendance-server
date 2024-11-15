@@ -84,7 +84,7 @@ app.post("/attendance",(req,res)=>{
     app.delete("/delete/:id", async (req, res) => {
         const { id } = req.params;
         try {
-            const deletedUser = await User.findByIdAndDelete(id);
+            const deletedUser = await User.findByIdAndDelete({_id:id});
             if (!deletedUser) {
                 return res.status(404).send({ message: "User not found" });
             }
