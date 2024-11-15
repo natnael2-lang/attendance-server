@@ -81,8 +81,18 @@ app.post("/attendance",(req,res)=>{
        res.status(200).json({message:"successfully post attendance"})
       
     }) 
-    
-
+    app.delete("/delete/:id", async (req, res) => {
+        const { id } = req.params;
+        try {
+            const deletedUser = await User.findByIdAndDelete(id);
+            if (!deletedUser) {
+                return res.status(404).send({ message: "User not found" });
+            }
+            res.status(200).send({ message: "User deleted successfully" });
+        } catch (error) {
+            res.status(500).send({ message: "Error deleting user", error });
+        }
+    });
 
 
 
